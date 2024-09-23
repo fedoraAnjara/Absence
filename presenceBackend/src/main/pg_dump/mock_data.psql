@@ -1,0 +1,39 @@
+-- Data for student table
+INSERT INTO student (id_student, first_name, last_name, email, genre, birth_date, observation, group_id)
+VALUES
+('STD001', 'John', 'Doe', 'john.doe@example.com', 'Male', '2000-01-15', 'No observation', 1),
+('STD002', 'Jane', 'Smith', 'jane.smith@example.com', 'Female', '1999-05-23', 'Excellent student', 1),
+('STD003', 'Michael', 'Johnson', 'michael.johnson@example.com', 'Male', '2001-07-30', 'Needs support in math', 2);
+
+-- Data for teacher table
+INSERT INTO teacher (first_name, last_name, email, birth_date, genre)
+VALUES
+('Laura', 'Miller', 'laura.miller@school.com', '1980-02-10', 'Female'),
+('David', 'Wilson', 'david.wilson@school.com', '1975-06-18', 'Male');
+
+-- Data for course table
+INSERT INTO course (title, id_teacher)
+VALUES
+('Mathematics', 1),
+('Physics', 2);
+
+-- Data for absence table
+INSERT INTO absence (date, id_course, id_student, is_justified, id_justification)
+VALUES
+('2024-09-10', 1, 'STD001', FALSE, NULL),
+('2024-09-12', 2, 'STD002', TRUE, 1);
+
+-- Data for justification table
+INSERT INTO justification (reason, fichier_justif, submission_date, id_absence)
+VALUES
+('Medical appointment', 'justif_001.pdf', '2024-09-13', 2);
+
+-- Data for administrator table
+INSERT INTO administrator (first_name, last_name, email, role, genre, birth_date, password)
+VALUES
+('Alice', 'Brown', 'alice.brown@school.com', 'Admin', 'Female', '1985-09-15', 'hashed_password123');
+
+-- Data for cor_process table
+INSERT INTO cor_process (reason, id_student)
+VALUES
+('Disciplinary action due to repeated absences', 'STD003');

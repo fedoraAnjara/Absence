@@ -1,0 +1,72 @@
+-- Table: absence
+CREATE TABLE absence (
+    id_absence SERIAL PRIMARY KEY,
+    date DATE NOT NULL,
+    id_course INT NOT NULL,
+    id_student VARCHAR(10) NOT NULL,
+    is_justified BOOLEAN NOT NULL,
+    id_justification INT,
+    CONSTRAINT fk_course FOREIGN KEY (id_course) REFERENCES course(id_course),
+    CONSTRAINT fk_student FOREIGN KEY (id_student) REFERENCES student(id_student),
+    CONSTRAINT fk_justification FOREIGN KEY (id_justification) REFERENCES justification(id_justification)
+);
+
+-- Table: course
+CREATE TABLE course (
+    id_course SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    id_teacher INT NOT NULL,
+    CONSTRAINT fk_teacher FOREIGN KEY (id_teacher) REFERENCES teacher(id_teacher)
+);
+
+-- Table: student
+CREATE TABLE student (
+    id_student VARCHAR(10) PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    genre VARCHAR(10),
+    birth_date DATE,
+    observation TEXT,
+    group_id INT
+);
+
+-- Table: teacher
+CREATE TABLE teacher (
+    id_teacher SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    birth_date DATE,
+    genre VARCHAR(10)
+);
+
+-- Table: justification
+CREATE TABLE justification (
+    id_justification SERIAL PRIMARY KEY,
+    reason TEXT NOT NULL,
+    fichier_justif VARCHAR(255),
+    submission_date DATE NOT NULL,
+    id_absence INT NOT NULL,
+    CONSTRAINT fk_absence FOREIGN KEY (id_absence) REFERENCES absence(id_absence)
+);
+
+-- Table: administrator
+CREATE TABLE administrator (
+    id_admin SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    role VARCHAR(50),
+    genre VARCHAR(10),
+    birth_date DATE,
+    password VARCHAR(100) NOT NULL
+);
+
+-- Table: cor_process
+CREATE TABLE cor_process (
+    id_process SERIAL PRIMARY KEY,
+    reason TEXT NOT NULL,
+    id_student VARCHAR(10) NOT NULL,
+    CONSTRAINT fk_student_cor_process FOREIGN KEY (id_student) REFERENCES student(id_student)
+);
