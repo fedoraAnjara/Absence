@@ -1,0 +1,347 @@
+openapi: 3.0.0
+info:
+  title: HEI Absence Management API
+  description: API for managing student absences at HEI
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+
+paths:
+  /students:
+    get:
+      summary: Get all students
+      responses:
+        '200':
+          description: A list of students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+    post:
+      summary: Create a new student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '201':
+          description: Student created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+
+  /students/{id}:
+    get:
+      summary: Get a student by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the student to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Student found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '404':
+          description: Student not found
+
+    put:
+      summary: Update a student
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the student to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '200':
+          description: Student updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '404':
+          description: Student not found
+
+    delete:
+      summary: Delete a student
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the student to delete
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Student deleted
+        '404':
+          description: Student not found
+
+  /absences:
+    get:
+      summary: Get all absences
+      responses:
+        '200':
+          description: A list of absences
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Absence'
+    post:
+      summary: Create a new absence
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Absence'
+      responses:
+        '201':
+          description: Absence created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Absence'
+
+  /absences/{id}:
+    get:
+      summary: Get an absence by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the absence to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Absence found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Absence'
+        '404':
+          description: Absence not found
+
+    put:
+      summary: Update an absence
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the absence to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Absence'
+      responses:
+        '200':
+          description: Absence updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Absence'
+        '404':
+          description: Absence not found
+
+    delete:
+      summary: Delete an absence
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the absence to delete
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Absence deleted
+        '404':
+          description: Absence not found
+
+  /processes:
+    get:
+      summary: Get all COR processes
+      responses:
+        '200':
+          description: A list of COR processes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CorProcess'
+    post:
+      summary: Create a new COR process
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CorProcess'
+      responses:
+        '201':
+          description: COR process created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorProcess'
+
+  /processes/{id}:
+    get:
+      summary: Get a COR process by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the COR process to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: COR process found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorProcess'
+        '404':
+          description: COR process not found
+
+    put:
+      summary: Update a COR process
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the COR process to update
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CorProcess'
+      responses:
+        '200':
+          description: COR process updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorProcess'
+        '404':
+          description: COR process not found
+
+    delete:
+      summary: Delete a COR process
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the COR process to delete
+          schema:
+            type: string
+      responses:
+        '204':
+          description: COR process deleted
+        '404':
+          description: COR process not found
+
+components:
+  schemas:
+    Student:
+      type: object
+      properties:
+        idStudent:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        genre:
+          type: string
+          enum: [F, M, O]
+        birthDate:
+          type: string
+        observation:
+          type: string
+        groupId:
+          type: string
+
+    Absence:
+      type: object
+      properties:
+        idAbsence:
+          type: string
+        date:
+          type: string
+          format: date-time
+        course:
+          $ref: '#/components/schemas/Course'
+        student:
+          $ref: '#/components/schemas/Student'
+        isJustified:
+          type: boolean
+
+    Course:
+      type: object
+      properties:
+        idCourse:
+          type: string
+        title:
+          type: string
+        teacher:
+          $ref: '#/components/schemas/Teacher'
+
+    Teacher:
+      type: object
+      properties:
+        idTeacher:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        genre:
+          type: string
+          enum: [F, M, O]
+        birthDate:
+          type: string
+
+    CorProcess:
+      type: object
+      properties:
+        idProcess:
+          type: string
+        reason:
+          type: string
+        student:
+          $ref: '#/components/schemas/Student'

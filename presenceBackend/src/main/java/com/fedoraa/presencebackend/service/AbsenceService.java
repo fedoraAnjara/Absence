@@ -1,38 +1,39 @@
 package com.fedoraa.presencebackend.service;
 
 import com.fedoraa.presencebackend.entity.Absence;
-import com.fedoraa.presencebackend.entity.Student;
+import com.fedoraa.presencebackend.entity.CorProcess;
 import com.fedoraa.presencebackend.repository.AbsenceDAO;
+import com.fedoraa.presencebackend.repository.CorProcessDAO;
+import com.fedoraa.presencebackend.repository.StudentDAO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class AbsenceService {
     private final AbsenceDAO absenceDAO;
+    private final CorProcessDAO corProcessDAO;
+    private final StudentDAO studentDAO;
 
     public List<Absence> getAllAbsences() {
         return absenceDAO.findAll();
     }
 
-    // Ajouter cette méthode
     public void addAbsence(Absence absence) {
         absenceDAO.save(absence);
+        if (absenceDAO.countUnjustifiedAbsences(absence.getStudent().getIdStudent()) >= 3) {
+            CorProcess corProcess = new CorProcess();
+            corProcess.setIdProcess(UUID.randomUUID().toString());
+            corProcess.setReason("3 absences with no justification");
+            corProcess.setIdStudent(absence.getStudent().getIdStudent());
+            corProcessDAO.save(corProcess);
+        }
     }
 
-    /*public void checkAbsencesAndConvocation(Student student) {
-        int unjustifiedAbsences = absenceDAO.countUnjustifiedAbsences(student.getIdStudent());
-
-        if (unjustifiedAbsences >= 3) {
-            ConvocationCOR convocation = new ConvocationCOR();
-            convocation.setStudentId(Long.valueOf(student.getIdStudent()));
-            convocation.setDateConvocation(new Date());
-            convocation.setDescription("Convocation au COR pour absences justifiable.");
-
-            convocationCORDAO.save(convocation);
-        }
-    }*/
+    public void deleteStudent(String idStudent) {
+        absenceDAO.deleteById(idStudent);
+    }
 }

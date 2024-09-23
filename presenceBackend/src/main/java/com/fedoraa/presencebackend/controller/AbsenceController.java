@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/absences")
+@RequestMapping("/absences")
 @AllArgsConstructor
 public class AbsenceController {
     private final AbsenceService absenceService;
@@ -24,8 +24,9 @@ public class AbsenceController {
         absenceService.addAbsence(absence);
     }
 
-    @PostMapping("/check")
-    public void checkAbsencesAndConvocate(@RequestBody Student student) {
-        absenceService.checkAbsencesAndConvocate(student);
+    @DeleteMapping("/{id_student}")
+    public void deleteStudent(@PathVariable String id_student) {
+        absenceService.deleteStudent(id_student);
     }
+
 }

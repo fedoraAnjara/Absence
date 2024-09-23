@@ -13,5 +13,5 @@ public class Absence {
     private LocalDateTime date;
     private Course course;
     private Student student;
+    private boolean isJustified; // Nouveau champ
 }
-
